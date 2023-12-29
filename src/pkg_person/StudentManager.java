@@ -2,6 +2,7 @@ package pkg_person;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class StudentManager {
     }
 
     public boolean deleteStudent(int delete_rollNo){
-        ListIterator<Student> student_iterator = (ListIterator<Student>) student_list.iterator();
+        ListIterator<Student> student_iterator = (ListIterator<Student>) student_list.listIterator();
         while(student_iterator.hasNext()){
             Student student = student_iterator.next();
             if(student.getRollNo()==delete_rollNo){
@@ -58,7 +59,7 @@ public class StudentManager {
     }
 
     public boolean updateStudent(int upd_rollNo, String name, String emailId , String phoneNumber , String address , String dob, int std , String division){
-        ListIterator<Student> student_iterator = (ListIterator<Student>) student_list.iterator();
+        ListIterator<Student> student_iterator = (ListIterator<Student>) student_list.listIterator();
         while(student_iterator.hasNext()){
             Student student = student_iterator.next();
             if(student.getRollNo()==upd_rollNo){
@@ -73,6 +74,13 @@ public class StudentManager {
             }
         }
         return false;
+    }
+
+    public void writeToFile(){
+        try {
+            oos_student = new ObjectOutputStream(new FileOutputStream(student_file));
+            oos_student.writeObject(student_list);
+        } catch (Exception e) {System.out.println(e);}
     }
 
 }

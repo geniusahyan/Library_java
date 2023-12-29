@@ -2,6 +2,9 @@ package pkg_books;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -48,9 +51,9 @@ public class BookManager {
         return book_list.size();
     }
 
-    public Book searchBookByIsbm(int search_isbm){
+    public Book searchBookByIsbn(int search_isbn){
         for(Book book:book_list){
-            if(book.getIsbn() == search_isbm){
+            if(book.getIsbn() == search_isbn){
                 return book;
             }
         }
@@ -58,7 +61,7 @@ public class BookManager {
     }
 
     public boolean deleteBook(int delete_isbn){
-        ListIterator<Book> book_Iterator = (ListIterator<Book>) book_list.iterator();
+        ListIterator<Book> book_Iterator = (ListIterator<Book>) book_list.listIterator();
         while(book_Iterator.hasNext()){
             Book book = book_Iterator.next();
             if(book.getIsbn()==delete_isbn){
@@ -69,5 +72,25 @@ public class BookManager {
         return false;
     }
 
+    public boolean updateBook(int update_isbn, int isbn, String title, String author, String publisher, int edition, String subject, int available_quantity){
+        ListIterator<Book> book_Iterator = (ListIterator<Book>) book_list.listIterator();
+        while(book_Iterator.hasNext()){
+            Book book = book_Iterator.next();
+            if(book.getIsbn()==update_isbn){
+                book.setAuthor(author);
+                book.setAvailableQuantity(available_quantity);
+                book.setEdition(edition);
+                book.setSubject(subject);
+                book.setPublisher(publisher);
+                book.setTitle(title);
+                return true;
+            }
+        }
+        return false;
+    }
+    public void writeToFile() throws FileNotFoundException, IOException{
+        oos_book = new ObjectOutputStream(new FileOutputStream(book_file));
+        oos_book.writeObject(book_list);
+    }
 
 }

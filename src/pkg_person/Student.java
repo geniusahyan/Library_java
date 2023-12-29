@@ -16,12 +16,15 @@ public class Student extends Person {
     // create constructor with parameter 
     public Student(String name, String emailId , String phoneNumber , String address , String dob, int rollNo , int std , String division){
        super(name ,emailId ,phoneNumber ,address ,dob);
+       this.rollNo = rollNo;
+       this.std = std;
+       this.division = division;
     }
     public Student(){
         super();
     }
 
     public String toString(){
-        return "Student [rollNo=" + rollNo + ",emailId=" + emailId + ",phoneNumber=" + phoneNumber + ",address="+ address + ",dob=" + dob + ",rollNo=" + rollNo + ",std=" + std + ",division=" + division + "]";
+        return "Student [Name=" + name + ",emailId=" + emailId + ",phoneNumber=" + phoneNumber + ",address="+ address + ",dob=" + dob + ",rollNo=" + rollNo + ",std=" + std + ",division=" + division + "]";
     }
 }

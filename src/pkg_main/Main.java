@@ -1,4 +1,5 @@
 package pkg_main;
+import pkg_books.Book;
 import pkg_books.BookManager;
 import pkg_exception.StudentNotFoundException;
 import pkg_person.Student;
@@ -91,7 +92,7 @@ public class Main {
                                 System.out.println("Enter Students Details to add Student");
                                 String name,emailId,phoneNumber,address,dob,division;
                                 int rollNo,std;
-                                sc.nextLine();
+                                // sc.nextLine();
                                 System.out.print("Name : ");
                                 name=sc.nextLine();
 
@@ -115,6 +116,7 @@ public class Main {
                                 
                                 System.out.print("Division : ");
                                 division=sc.nextLine();
+                                // sc.nextLine();
 
                                 student = new Student( name,  emailId ,  phoneNumber ,  address , dob, rollNo , std ,  division);
                                 sm.addStudent(student);
@@ -168,6 +170,62 @@ public class Main {
                                     System.out.println("No Record with given roll numbr exist");
                                 }
                                 break;
+                            case 21:
+                                bm.viewAllBooks();
+                                break;
+
+
+                            case 22:
+                                int search_isbn;
+                                System.out.println("Enter ISBN of the Book to search");    
+                                search_isbn = sc.nextInt();
+                                Book book = bm.searchBookByIsbn(search_isbn);
+                                if (book == null) {
+                                    System.out.println("No Book with this ISBN Exists in out library");
+                                }else{System.out.println(book);}   
+                                break;
+
+
+                            case 23:
+                                System.out.println("Enter Book Details to add");    
+                                int isbn;
+                                String title;
+                                String author;
+                                String publisher;
+                                int edition;
+                                String subject;
+                                int available_quantity;
+                                System.out.println("Enter isbn");
+                                isbn = sc.nextInt();
+                                sc.nextLine();
+                                System.out.println("Title");
+                                title = sc.nextLine();
+                                System.out.println("Author");
+                                author = sc.nextLine();
+                                System.out.println("Publisher");
+                                publisher = sc.nextLine();
+                                System.out.println("Edition");
+                                edition = sc.nextInt();
+                                System.out.println("Subject");
+                                subject = sc.nextLine();
+                                System.out.println("Available quantity");
+                                available_quantity = sc.nextInt();
+
+                                book = new Book(isbn, title, author, publisher, edition, subject,  available_quantity);
+
+                                break;
+
+
+                            case 24:
+                                System.out.println();    
+                                break;
+
+
+                            case 25:
+                                System.out.println();    
+                                break;
+
+
 
                             case 99:
                                 System.out.println("thx ja fir ab");
@@ -181,5 +239,7 @@ public class Main {
             }
 
         }while(choice != 3);
+        sc.close();
+        sm.writeToFile();
     }
 }

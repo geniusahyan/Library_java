@@ -1,30 +1,25 @@
 package pkg_person;
 
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
-abstract public class Person {
+abstract public class Person implements Serializable {
     protected String name;
     protected String emailId;
     protected String phoneNumber;
     protected String address;
     protected String dob;
 
-    public void setName(String name){ 
-        // Regular expression to check the Name
-        boolean isValidName = Pattern.matches("[a-zA-Z]", name);
-        if (isValidName) this.name=name;
+    public void setName(String name){
+        this.name=name;
     }
 
     public void setEmailId(String emailId){
-        // Regular expression to check the Email ID
-        boolean isValidEmail = Pattern.matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$" ,emailId);
-        if (isValidEmail) this.emailId=emailId;
+        this.emailId=emailId;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        // Regular expression to check the Phone Number
-        boolean isValidPhoneNumber = Pattern.matches("[0-9]{10}", phoneNumber);
-        if (isValidPhoneNumber) this.phoneNumber = phoneNumber;
+        this.phoneNumber = phoneNumber;
     }
 
     public void setAddress(String address){this.address = address;}
