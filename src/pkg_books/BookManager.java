@@ -72,7 +72,7 @@ public class BookManager {
         return false;
     }
 
-    public boolean updateBook(int update_isbn, int isbn, String title, String author, String publisher, int edition, String subject, int available_quantity){
+    public boolean updateBook(int update_isbn,String title, String author, String publisher, int edition, String subject, int available_quantity){
         ListIterator<Book> book_Iterator = (ListIterator<Book>) book_list.listIterator();
         while(book_Iterator.hasNext()){
             Book book = book_Iterator.next();

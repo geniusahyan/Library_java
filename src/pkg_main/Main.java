@@ -1,14 +1,18 @@
 package pkg_main;
 import pkg_books.Book;
 import pkg_books.BookManager;
+import pkg_exception.BookNotFoundException;
 import pkg_exception.StudentNotFoundException;
 import pkg_person.Student;
 import pkg_person.StudentManager;
 import pkg_transaction.BookTransactionManager;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws StudentNotFoundException {
+    public static void main(String[] args) throws StudentNotFoundException, FileNotFoundException, IOException {
         int choice;
         Scanner sc = new Scanner(System.in);
         
@@ -212,23 +216,58 @@ public class Main {
                                 available_quantity = sc.nextInt();
 
                                 book = new Book(isbn, title, author, publisher, edition, subject,  available_quantity);
+                                System.out.println("A book record is added");
 
                                 break;
 
 
                             case 24:
-                                System.out.println();    
-                                break;
+                                System.out.println("Enter isbn to update the record");    
+                                int update_isbn = sc.nextInt();
+                                try {
+                                    book = bm.searchBookByIsbn(update_isbn);
+                                    if (book == null) {
+                                        throw new BookNotFoundException();
+                                    }
+                                } catch (Exception e) {System.out.println(e);}
 
+                                System.out.println("Enter Book details to update the book");
+                                sc.nextLine();
+
+                                sc.nextLine();
+                                System.out.println("Title");
+                                title = sc.nextLine();
+                                System.out.println("Author");
+                                author = sc.nextLine();
+                                System.out.println("Publisher");
+                                publisher = sc.nextLine();
+                                System.out.println("Edition");
+                                edition = sc.nextInt();
+                                System.out.println("Subject");
+                                subject = sc.nextLine();
+                                System.out.println("Available quantity");
+                                available_quantity = sc.nextInt();
+
+                                bm.updateBook(update_isbn, title, author, publisher, edition, subject, available_quantity);
+                                System.out.println("A book record is updated");
+
+                                break;
+                                
 
                             case 25:
-                                System.out.println();    
+                                System.out.println("Enter isbn to delete a record");    
+                                int del_isbn = sc.nextInt();
+                                book = bm.searchBookByIsbn(del_isbn);
+                                if (book != null){
+                                    bm.deleteBook(del_isbn);
+                                    System.out.println("Record deleted successfully.");
+                                    } else{
+                                        System.out.println("No such book found in database!");
+                                        }
                                 break;
 
-
-
                             case 99:
-                                System.out.println("thx ja fir ab");
+                                System.out.println("thx ja ghum fir ab maje kr");
                                 break;
 
                             default :
@@ -239,7 +278,8 @@ public class Main {
             }
 
         }while(choice != 3);
-        sc.close();
         sm.writeToFile();
+        bm.writeToFile();
+        sc.close();
     }
 }
