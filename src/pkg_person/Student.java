@@ -14,8 +14,8 @@ public class Student extends Person {
     public String getDivision(){return this.division;}
 
     // create constructor with parameter 
-    public Student(String name, String emailId , String phoneNumber , String address , int dob, int rollNo , int std , String division){
-        // super(name, emailId, phoneNumber, address, dob);
+    public Student(String name, String emailId , String phoneNumber , String address , String dob, int rollNo , int std , String division){
+       super(name ,emailId ,phoneNumber ,address ,dob);
     }
     public Student(){
         super();
