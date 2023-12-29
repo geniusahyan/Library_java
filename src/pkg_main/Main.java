@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws StudentNotFoundException, FileNotFoundException, IOException {
+    public static void main(String[] args) throws StudentNotFoundException, FileNotFoundException, IOException, BookNotFoundException {
         int choice;
         Scanner sc = new Scanner(System.in);
         
@@ -40,18 +40,56 @@ public class Main {
                         switch (stud_choice) {
                             case 1:
                                 System.out.println("View all selected");
+                                bm.viewAllBooks();
                                 break;
                             case 2:
-                                System.out.println("Search by isbn");
+                                System.out.println("Enter isbn to search");
+                                int search_isbn;
+                                System.out.println("Enter ISBN of the Book to search");    
+                                search_isbn = sc.nextInt();
+                                Book book = bm.searchBookByIsbn(search_isbn);
+                                if (book == null) {
+                                    System.out.println("No Book with this ISBN Exists in out library");
+                                }else{System.out.println(book);} 
+
                                 break;
                             case 3:
-                                System.out.println("Search by subject");
+                                System.out.println("Search subject to search");
+                                sc.nextLine();
+                                String subject = sc.nextLine();
+                                bm.listBooksBySubject(subject);
+                                
                                 break;
                             case 4:
-                                System.out.println("Issual of book");
+                                System.out.println("Enter the isbn to issue a book");
+                                int issue_isbn = sc.nextInt();
+                                book = bm.searchBookByIsbn(issue_isbn);
+                                if (book == null) {
+                                    throw new BookNotFoundException();
+                                }
+                                if (book.getAvailableQuantity()>0) {
+                                    if (btm.issueBook(rollNumber, issue_isbn)) {
+                                        book.setAvailableQuantity(book.getAvailableQuantity()-1);
+                                        System.out.println("Book has been issued");
+                                    }
+                                }else{
+                                    System.out.println("the book has been issued");
+                                }
                                 break;
                             case 5:
-                                System.out.println("Return of Book");
+                                System.out.println("Enter the isbn to return a book");
+                                int return_isbn = sc.nextInt();
+                                book = bm.searchBookByIsbn(return_isbn);
+                                if (book != null) {
+                                    if (btm.returnBook(rollNumber, return_isbn)) {
+                                    book.setAvailableQuantity(book.getAvailableQuantity()+1);
+                                    System.out.println("Thnx for returning this book");
+                                    }else{
+                                        System.out.println("You have not borrowed this book or it's expired");
+                                    }
+                                }else{
+                                    System.out.println("Book with this isbn is not exists");
+                                }
                                 break;
                             case 99:
                                 System.out.println("thx ja fir ab");
@@ -280,6 +318,7 @@ public class Main {
         }while(choice != 3);
         sm.writeToFile();
         bm.writeToFile();
+        btm.writeToFile();
         sc.close();
     }
 }

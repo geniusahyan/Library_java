@@ -2,6 +2,9 @@ package pkg_transaction;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Date;
@@ -31,7 +34,7 @@ public class BookTransactionManager {
         }catch(Exception e){e.printStackTrace();}
     }
 
-   public boolean issueBood(int rollNo, int isbn){
+   public boolean issueBook(int rollNo, int isbn){
     int total_books_issued = 0;
 
     for(BookTransaction book_Transaction:book_transaction_list){
@@ -46,7 +49,7 @@ public class BookTransactionManager {
     BookTransaction book_transaction = new BookTransaction(isbn,rollNo);
     book_transaction.setIssueDate(issue_date);
     book_transaction_list.add(book_transaction);
-    return false;
+    return true;
    }
 
    public boolean returnBook(int rollNo, int isbn){
@@ -58,6 +61,16 @@ public class BookTransactionManager {
         }
     }
     return false;
+   }
+
+   public void showAll(){
+    for(BookTransaction book_transaction:book_transaction_list)
+        System.out.println(book_transaction);
+   }
+
+   public void writeToFile() throws FileNotFoundException, IOException{
+    oos_book_transaction = new ObjectOutputStream(new FileOutputStream(book_transaction_file));
+    oos_book_transaction.writeObject(book_transaction_list);
    }
 
 }
