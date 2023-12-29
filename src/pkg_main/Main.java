@@ -7,7 +7,7 @@ import pkg_transaction.BookTransactionManager;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws StudentNotFoundException {
         int choice;
         Scanner sc = new Scanner(System.in);
         
@@ -59,7 +59,9 @@ public class Main {
                     System.out.println(snfe);
                 }
             }else if (choice == 2) {
+
                 int lib_choice;
+                do{
                 System.out.println("Enter 11 to view all Student\nEnter 12 to print a Student by Roll Number\nEnter 13 to Register a Student\nEnter 14 to delete a Student\nEnter 15 to update a Student");
                 System.out.println("Enter 21 to view all Books\nEnter 22 to print a Book by ISBN\nEnter 23 to Add a new Book\nEnter 24 to delete a Book\nEnter 25 to update a Book");
                 System.out.println("Enter 31 to view all Transaction");
@@ -75,7 +77,7 @@ public class Main {
                                 break;
 
                             case 12:
-                                System.out.println("Enter rollNo to fetch student record");
+                                System.out.println("Enter roll number to fetch student record");
                                 int get_rollNo = sc.nextInt();
                                 Student student = sm.get(get_rollNo);
                                 if (student == null) {
@@ -115,14 +117,56 @@ public class Main {
                                 division=sc.nextLine();
 
                                 student = new Student( name,  emailId ,  phoneNumber ,  address , dob, rollNo , std ,  division);
-                                break;
-
-                            case 14:
-                                System.out.println("Issual of book");
+                                sm.addStudent(student);
+                                System.out.println("Student is added");
                                 break;
 
                             case 15:
-                                System.out.println("Return of Book");
+                                System.out.println("Enter the rollNo to update the record");
+                                int upd_rollNo = sc.nextInt();
+                                student = sm.get(upd_rollNo);
+                                try {
+                                    if (student == null) {
+                                        throw new StudentNotFoundException();
+                                    }
+
+                                    sc.nextLine();
+                                    System.out.print("Name : ");
+                                    name=sc.nextLine();
+
+                                    System.out.print("Email ID : ");
+                                    emailId=sc.nextLine();
+
+                                    System.out.print("Phone Number : ");
+                                    phoneNumber=sc.nextLine();
+
+                                    System.out.print("Address : ");
+                                    address=sc.nextLine();
+
+                                    System.out.print("Date of Birth(dd/mm/yyyy): ");
+                                    dob=sc.nextLine();
+
+                                    System.out.print("Standard as Integer: ");
+                                    std=sc.nextInt();
+                                    
+                                    System.out.print("Division : ");
+                                    division=sc.nextLine();
+                                    sm.updateStudent(upd_rollNo, name, emailId, phoneNumber, address, dob, std, division);
+                                    System.out.println("Student Record is updated");
+                                } catch (Exception e) {
+                                    System.out.println(e);
+                                }
+                                
+                                break;
+
+                            case 14:
+                                System.out.println("Enter the roll numner to delete student ");
+                                int delete_rollNo = sc.nextInt();
+                                if (sm.deleteStudent(delete_rollNo)) {
+                                    System.out.println("Student Record is Removed");
+                                }else{
+                                    System.out.println("No Record with given roll numbr exist");
+                                }
                                 break;
 
                             case 99:
@@ -132,9 +176,7 @@ public class Main {
                             default :
                                 System.out.println("Invalid Choice");
                         }
-
-
-
+                    }while (lib_choice != 99);
 
             }
 

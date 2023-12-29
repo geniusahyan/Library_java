@@ -57,4 +57,22 @@ public class StudentManager {
         return false;
     }
 
+    public boolean updateStudent(int upd_rollNo, String name, String emailId , String phoneNumber , String address , String dob, int std , String division){
+        ListIterator<Student> student_iterator = (ListIterator<Student>) student_list.iterator();
+        while(student_iterator.hasNext()){
+            Student student = student_iterator.next();
+            if(student.getRollNo()==upd_rollNo){
+                student.setName(name);
+                student.setEmailId(emailId);
+                student.setPhoneNumber(phoneNumber);
+                student.setAddress(address);
+                student.setDob(dob);
+                student.setStd(std);
+                student.setDivision(division);
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
