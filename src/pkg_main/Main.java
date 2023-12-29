@@ -303,7 +303,9 @@ public class Main {
                                         System.out.println("No such book found in database!");
                                         }
                                 break;
-
+                            case 31:
+                                System.out.println("All the trancation are : ");
+                                btm.showAll();
                             case 99:
                                 System.out.println("thx ja ghum fir ab maje kr");
                                 break;
