@@ -1,19 +1,17 @@
 package pkg_main;
+import pkg_books.BookManager;
 import pkg_exception.StudentNotFoundException;
 import pkg_person.Student;
 import pkg_person.StudentManager;
 import pkg_transaction.BookTransactionManager;
-
-import java.rmi.StubNotFoundException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         int choice;
         Scanner sc = new Scanner(System.in);
-
-        // BookManager bm = new BookManager();
-        BookMa
+        
+        BookManager bm = new BookManager();
         StudentManager sm = new StudentManager();
         BookTransactionManager btm = new BookTransactionManager();
 
@@ -57,7 +55,7 @@ public class Main {
                                 System.out.println("Invalid Choice");
                         }
                     }while(stud_choice != 99);
-                } catch (StubNotFoundException snfe) {
+                } catch (StudentNotFoundException snfe) {
                     System.out.println(snfe);
                 }
             }
